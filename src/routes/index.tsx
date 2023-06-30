@@ -61,17 +61,7 @@ export default function Index() {
                     </button>
                   ))}
                 </div>
-                <div className="flex justify-center">
-                  <p className="text-sm text-gray-500 mt-5">
-                    Built with 🤖{" "}
-                    <a
-                      className="underline"
-                      href="https://github.com/ascorbic/daneel"
-                    >
-                      Daneel
-                    </a>
-                  </p>
-                </div>
+                
               </>
             ) : (
               chatHistory.map((chat, i) => (

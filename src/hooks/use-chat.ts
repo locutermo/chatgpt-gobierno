@@ -2,7 +2,7 @@ import { fetchEventSource } from "@fortaine/fetch-event-source";
 import { useState, useMemo } from "react";
 import { appConfig } from "../../config.browser";
 
-const API_PATH = "/api/chat";
+const API_PATH = "https://api-chatgpt-dg1w.onrender.com/get_response";
 interface ChatMessage {
   role: "user" | "assistant";
   content: string;
@@ -57,15 +57,27 @@ export function useChat() {
     ];
 
     setChatHistory(newHistory);
-    const body = JSON.stringify({
-      // Only send the most recent messages. This is also
-      // done in the serverless function, but we do it here
-      // to avoid sending too much data
-      messages: newHistory.slice(-appConfig.historyLength),
-    });
-
+    const body = new FormData()
+    body.append("question",message)
+    console.log(newHistory)
     // This is like an EventSource, but allows things like
     // POST requests and headers
+    fetch(API_PATH,{
+      method: "POST",
+      body,
+      signal:abortController.signal,
+    }).then(e=>{
+       return e.json() 
+    }).then(e=>{
+      let chatContent = e.data
+      setChatHistory((curr) => [
+              ...curr,
+              { role: "assistant", content: chatContent } as const,
+            ]);
+            setCurrentChat(null);
+            setState("idle");
+    })
+    /*
     fetchEventSource(API_PATH, {
       body,
       method: "POST",
@@ -74,9 +86,12 @@ export function useChat() {
         setState("idle");
       },
       onmessage: (event) => {
+        console.log("Evento:",event)
         switch (event.event) {
           case "delta": {
             // This is a new word or chunk from the AI
+            console.log("Evento-:",event)
+
             setState("loading");
             const message = JSON.parse(event.data);
             if (message?.role === "assistant") {
@@ -110,6 +125,7 @@ export function useChat() {
         }
       },
     });
+ */
   };
 
   return { sendMessage, currentChat, chatHistory, cancel, clear, state };
