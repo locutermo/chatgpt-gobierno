@@ -1,5 +1,4 @@
-import { samplePhrases } from "./prompts/movie-critic";
-// import { samplePhrases } from "./prompts/tour-guide";
+import { samplePhrases } from "./prompts/defaults";
 
 export const appConfig = {
   historyLength: 8,

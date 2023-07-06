@@ -43,7 +43,7 @@ export default function Index() {
   }, [state]);
 
   return (
-    <App title="Create your own AI chat bot">
+    <App title="Consulta de Lineamientos">
       <main className="bg-white md:rounded-lg md:shadow-md p-6 w-full h-full flex flex-col">
         <section className="overflow-y-auto flex-grow mb-4 pb-8">
           <div className="flex flex-col space-y-4">
@@ -74,16 +74,8 @@ export default function Index() {
 
           <div ref={bottomRef} />
         </section>
-        <div className="flex items-center justify-center h-20">
-          {state === "idle" ? null : (
-            <button
-              className="bg-gray-100 text-gray-900 py-2 px-4 my-8"
-              onClick={cancel}
-            >
-              Stop generating
-            </button>
-          )}
-        </div>
+         
+        
         <section className="bg-gray-100 rounded-lg p-2">
           <form
             className="flex"
@@ -103,14 +95,14 @@ export default function Index() {
                   setMessage("");
                 }}
               >
-                Clear
+                Limpiar
               </button>
             ) : null}
             <input
               type="text"
               ref={inputRef}
               className="w-full rounded-l-lg p-2 outline-none"
-              placeholder={state == "idle" ? "Type your message..." : "..."}
+              placeholder={state == "idle" ? "Escribe tu pregunta ..." : "..."}
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               disabled={state !== "idle"}
@@ -120,7 +112,7 @@ export default function Index() {
                 className="bg-blue-700 text-white font-bold py-2 px-4 rounded-r-lg"
                 type="submit"
               >
-                Send
+                Enviar
               </button>
             ) : null}
           </form>

@@ -8,7 +8,7 @@ interface AppProps {
 
 export const App: React.FC<React.PropsWithChildren<AppProps>> = ({
   children,
-  title,
+  title="Consulta de Lineamientos",
 }) => {
   return (
     <>
